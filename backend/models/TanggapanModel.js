@@ -7,18 +7,17 @@ const {DataTypes} = Sequelize;
 
 const Tanggapan = db.define("tanggapan",{
     id_tanggapan:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.UUID,
+        defaultValue:DataTypes.UUIDV1,
         primaryKey:true,
-        autoIncrement:true,
     },
     tgl_tanggapan:DataTypes.DATE,
     tanggapan:DataTypes.TEXT,
 })
 
-await Tanggapan.sync();
-
 Tanggapan.belongsTo(Pengaduan,{
     foreignKey:"id_pengaduan",
+    onDelete:"CASCADE"
 })
 
 Pengaduan.hasMany(Tanggapan, {
@@ -26,12 +25,15 @@ Pengaduan.hasMany(Tanggapan, {
 })
 
 Tanggapan.belongsTo(Petugas,{
-    foreignKey:"id_petugas"
+    foreignKey:"id_petugas",
 })
 
 Petugas.hasMany(Tanggapan,{
     foreignKey:"id_petugas"
 })
+
+await Tanggapan.sync();
+
 
 
 export default Tanggapan;
