@@ -6,7 +6,7 @@ const {DataTypes} = Sequelize;
 const Masyarakat = db.define("masyarakat",{
     nik:{
         type:DataTypes.STRING,
-        primaryKey:true
+        primaryKey:true,
     },
     nama:DataTypes.STRING,
     username:DataTypes.STRING,

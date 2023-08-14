@@ -38,7 +38,6 @@ class TanggapanController {
         if(!tanggapan) return res.json("Tanggapan tidak ada");
 
         const rules = Joi.object({
-            tgl_tanggapan:Joi.date().required(),
             tanggapan:Joi.required(),
         })
 

@@ -6,7 +6,12 @@ import TanggapanController from "../controller/TanggapanController.js";
 
 const Route = express.Router()
 
-Route.get("/",new MasyarakatController().index);  
+Route.get("/",new MasyarakatController().index); 
+
+Route.get("/masyarakat",new MasyarakatController().index);
+Route.post("/masyarakat",new MasyarakatController().store);
+Route.put("/masyarakat/:id/",new MasyarakatController().update);
+Route.delete("/masyarakat/:id/",new MasyarakatController().destroy);
 
 Route.get("/pengaduan",new PengaduanController().index); 
 Route.post("/pengaduan",new PengaduanController().store); 
