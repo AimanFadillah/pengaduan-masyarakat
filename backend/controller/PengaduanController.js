@@ -12,12 +12,12 @@ class PengaduanController {
         status:Joi.required().valid("proses","selesai","0"), 
     };
 
-    async index (req,res) {
+    static async index (req,res) {
         const data = await Pengaduan.findAll();
         return res.json(data);
     }
 
-    async store (req,res){  
+    static async store (req,res){  
 
         const data = req.body;
 
@@ -38,7 +38,7 @@ class PengaduanController {
         return res.json({msg:"success"}); 
     }
 
-    async update (req,res) {
+    static async update (req,res) {
         const pengaduan = await Pengaduan.findOne({ where: { id_pengaduan:req.params.id } });
 
         const data = req.body;
@@ -63,7 +63,7 @@ class PengaduanController {
         return res.json({msg:"success"});
     }
 
-    async destroy (req,res) {
+    static async destroy (req,res) {
         const pengaduan = await Pengaduan.findOne({ where : { id_pengaduan:req.params.id } })
 
         if(!pengaduan) return res.json({errors:"Tidak ada Data"});

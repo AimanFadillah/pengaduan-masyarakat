@@ -4,12 +4,11 @@ import bcrypt from "bcrypt";
 
 class PetugasController {
 
-    async index (req,res) {
-        const data = await Petugas.findAll();
-        return res.json(data);
+    static async index (req,res) {
+        return res.render("registrasi");
     }
 
-    async store (req,res) {
+    static async store (req,res) {
 
         const data = req.body;
 
@@ -18,7 +17,7 @@ class PetugasController {
             username:Joi.required(),
             password:Joi.required(),
             telp:Joi.number().required(),
-            level:Joi.valid("admin","petugas").required(),
+            level:Joi.valid("admin","petugas","masyarakat").required(),
         })
 
         const validatedData = rules.validate(data);
@@ -32,7 +31,7 @@ class PetugasController {
         return res.json({msg:"success"});
     }
 
-    async destroy (req,res) {
+    static async destroy (req,res) {
         const petugas = await Petugas.findOne({where:{ id_petugas:req.params.id }})
 
         if(!petugas) return res.json({msg:"tidak ada Petugas"});

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("layouts/header")  %>
+</head>
+<body class="bg-secondary">
+    
+    <div class="container" style="margin-top: 100px;" >
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="rounded bg-light shadow p-3">
+                    <form id="formCreate" >
+                        <h1 class="text-center" >Login</h1>
+                        <div class="mb-3">
+                            <label for="name" class="form-label" >Nama</label> 
+                            <input type="text" name="name" class="form-control" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label" >password</label>
+                            <input type="password" name="password" class="form-control" required >
+                        </div>
+                        <button class="btn btn-success shadow" style="width: 100%;" >Masuk</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+<script src="/js/login.js" ></script>
+
+</html>

@@ -1,18 +1,20 @@
 import express from "express";
 import fileUpload from "express-fileupload";
-import cors from "cors";
 import Route from "./routes/Route.js";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 
 const app = express()
 const port = 5000;
 
-app.use(cors());
+dotenv.config();
+
+app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(fileUpload());
-
 app.use(express.static("public"))
+app.use(cookieParser());
 app.use(Route)
 
-app.get("/",(req,res) => res.send("Masih pake api")) 
+app.listen(port, () => console.log(`serve berjalan di http://localhost:${port}`))
 
-app.listen(port,() => console.log(`serve berjalan di http://localhost:${port}`))

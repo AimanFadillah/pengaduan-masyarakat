@@ -3,12 +3,12 @@ import Joi from "joi";
 
 class TanggapanController {
 
-    async index (req,res) {
+    static async index (req,res) {
         const data = await Tanggapan.findAll();
         return res.json(data);
     }
 
-    async store (req,res) {
+    static async store (req,res) {
 
         const data = req.body;
 
@@ -31,7 +31,7 @@ class TanggapanController {
         return res.json({msg:"success"});
     }
 
-    async update (req,res){
+    static async update (req,res){
         const tanggapan = await Tanggapan.findOne({where:{ id_tanggapan:req.params.id }});
         const data = req.body;
 
@@ -49,7 +49,7 @@ class TanggapanController {
         return res.json({msg:"success"});
     }
 
-    async destroy (req,res) {
+    static async destroy (req,res) {
         const tanggapan = await Tanggapan.findOne({where:{ id_tanggapan:req.params.id }});
 
         if(!tanggapan) return res.json("Tanggapan tidak ada");

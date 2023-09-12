@@ -3,12 +3,14 @@ import Joi from "joi";
 import bcrypt from "bcrypt";
 
 class MasyarakatController {
-    async index(req, res) {
+    static async index(req, res) {
         const data = await Masyarakat.findAll();
-        return res.json(data);
+        return res.render("masyarakat",{
+            data:data,
+        });
     }
 
-    async store(req, res) {
+    static async store(req, res) {
         const data = req.body;
 
         const rules = Joi.object({
@@ -38,7 +40,7 @@ class MasyarakatController {
         return res.json({ msg: "success" });
     }
 
-    async update(req, res) {
+    static async update(req, res) {
         const data = req.body;
         const masyarakat = await Masyarakat.findOne({ where: { nik: req.params.id } })
 
@@ -58,7 +60,7 @@ class MasyarakatController {
         return res.json({msg:"success"});
     }
 
-    async destroy(req, res) {
+    static async destroy(req, res) {
         const masyarakat = await Masyarakat.findOne({ where: { nik: req.params.id } });
 
         if (!masyarakat) return res.json({ msg: "Tidak ada masyarakat" });
