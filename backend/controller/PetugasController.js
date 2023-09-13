@@ -1,6 +1,7 @@
 import Petugas from "../models/PetugasModel.js";
 import Joi from "joi";
 import bcrypt from "bcrypt";
+import Pesan from "../Traits/Pesan.js";
 
 class PetugasController {
 
@@ -16,19 +17,24 @@ class PetugasController {
             nama_petugas:Joi.required(),
             username:Joi.required(),
             password:Joi.required(),
+            confPassword:Joi.required(),
             telp:Joi.number().required(),
-            level:Joi.valid("admin","petugas","masyarakat").required(),
         })
 
         const validatedData = rules.validate(data);
-        if(validatedData.error) return res.json({msg:validatedData.error.details[0].message.replace(/"/g, '')});
+        if(validatedData.error) return res.json(Pesan.pesanValidasi(validatedData.error));
 
-        bcrypt.hash(data.password,10,async (error,hasil) => {
-            data.password = hasil
+        if(data.password !== data.confPassword) return res.json(Pesan.pesanError("Konfirmasi Password Salah"))
+
+        data.level = "masyarakat";
+
+        try{
+            data.password = bcrypt.hashSync(data.password,10)
             await Petugas.create(data);
-        });
-
-        return res.json({msg:"success"});
+        }catch(e){
+            return res.json(Pesan.pesanModel(e))
+        }
+        return res.json(Pesan.pesanSuccess());
     }
 
     static async destroy (req,res) {

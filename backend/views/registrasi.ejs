@@ -9,29 +9,29 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="rounded bg-light shadow p-3">
-                    <form id="formCreate" >
+                    <form id="formCreate" action="/registrasi" method="post" data-redirect="/login" >
                         <h1 class="text-center" >Registrasi</h1>
                         <div class="mb-3">
                             <label for="name" class="form-label" >Nama</label> 
-                            <input type="text" name="nama_petugas" class="form-control" >
+                            <input type="text" required name="nama_petugas" class="form-control" >
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label" >Username</label> 
-                            <input type="text" name="username" class="form-control" >
+                            <input type="text" required name="username" class="form-control" >
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label" >Password</label> 
-                            <input type="password" name="password" class="form-control" >
+                            <input type="password" required name="password" class="form-control" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label" >Konfirmasi Password</label> 
+                            <input type="password" required name="confPassword" class="form-control" >
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label" >telp</label> 
-                            <input type="text" name="telp" class="form-control" >
+                            <input type="text" required name="telp" class="form-control" >
                         </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label" >telp</label> 
-                            <input type="text" name="telp" class="form-control" >
-                        </div>
-                        <button class="btn btn-success shadow" style="width: 100%;" >Masuk</button>
+                        <button class="btn btn-success shadow" style="width: 100%;" >Daftar</button>
                     </form>
                 </div>
             </div>

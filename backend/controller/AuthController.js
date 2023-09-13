@@ -30,9 +30,6 @@ class AuthController {
         }
     }
 
-    static async auth(req, res) {
-        return res.json({ "msg": "SeIamat udah Iogin" })
-    }
 
     static async login(req, res) {
         const data = req.body;

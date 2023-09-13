@@ -9,14 +9,20 @@ const Petugas = db.define("petugas", {
         defaultValue: DataTypes.UUIDV1,
         primaryKey: true,
     },
-    nama_petugas: DataTypes.STRING,
+    nama_petugas:{
+        type:DataTypes.STRING,
+        unique:true,
+    },
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     telp: DataTypes.STRING,
-    level: DataTypes.STRING,
+    level: {
+        type:DataTypes.STRING,
+        allowNull:false,
+    },
 })
 
-await Petugas.sync();
+// await Petugas.sync();
 
 export default Petugas;
 
