@@ -2,6 +2,7 @@ import Petugas from "../models/PetugasModel.js";
 import jwt, { decode } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Joi from "joi";
+import Pesan from "../Traits/Pesan.js";
 
 class AuthController {
 
@@ -42,10 +43,10 @@ class AuthController {
         if (validatedData.error) return res.json({ msg: validatedData.error.details[0].message.replace(/"/g, '') });
 
         const petugas = await Petugas.findOne({ where: { nama_petugas: data.name } })
-        if (!petugas) return res.json({ msg: "User tidak ditemukkan",status:"danger" });
+        if (!petugas) return res.json({ msg: "Name atau Password salah",status:"danger" });
 
         const match = await bcrypt.compare(data.password, petugas.password);
-        if (!match) return res.json({ msg: "Password Salah",status:"danger" })
+        if (!match) return res.json({ msg: "Name atau Password salah",status:"danger" })
 
         const id = petugas.id_petugas;
         const token = jwt.sign({ id: id }, process.env.JWT_TOKEN, {
@@ -55,7 +56,7 @@ class AuthController {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
         })
-        return res.json({ msg: "Password Salah",status:"success" })
+        return res.json(Pesan.pesanSuccess());
     }
 
     static async logout (req,res){

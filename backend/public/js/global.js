@@ -14,6 +14,17 @@ async function setupFecth (form,link = window.location.href,method = "POST"){
     return data;
 }
 
+function buttonLoadingOn (button) {
+    button.innerHTML = `<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> ` + button.innerHTML;
+    button.disabled = true;
+}
+
+function buttonLoadingOff (button) {
+    const span = button.querySelector(".spinner-border");
+    button.removeChild(span);
+    button.disabled = false;
+}
+
 function redirect (link) {
     return window.location.href = link;
 }

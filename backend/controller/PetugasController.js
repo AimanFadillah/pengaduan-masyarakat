@@ -10,7 +10,6 @@ class PetugasController {
     }
 
     static async store (req,res) {
-
         const data = req.body;
 
         const rules = Joi.object({
@@ -32,8 +31,9 @@ class PetugasController {
             data.password = bcrypt.hashSync(data.password,10)
             await Petugas.create(data);
         }catch(e){
-            return res.json(Pesan.pesanModel(e))
+            return res.json(Pesan.pesanError("Nama sudah digunakan"))
         }
+        
         return res.json(Pesan.pesanSuccess());
     }
 
