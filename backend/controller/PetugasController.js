@@ -8,7 +8,10 @@ class PetugasController {
     static async index (req,res) {
         const data = await Petugas.findAll();
         return res.json(data);
-        // return res.render("registrasi");
+    }
+
+    static async register (req,res){
+        return res.render("registrasi")
     }
 
     static async store (req,res) {

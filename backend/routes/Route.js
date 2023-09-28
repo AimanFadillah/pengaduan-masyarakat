@@ -11,7 +11,7 @@ Route.get("/",AuthController.verifikasi,(req,res) => res.render("beranda"));
 Route.get("/login",AuthController.index)
 Route.get("/logout",AuthController.logout)
 Route.post("/login",AuthController.login)
-Route.get("/registrasi",PetugasController.index)
+Route.get("/registrasi",PetugasController.register)
 Route.post("/registrasi",PetugasController.store)
 
 Route.get("/masyarakat",MasyarakatController.index);
