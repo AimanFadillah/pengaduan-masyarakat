@@ -26,12 +26,12 @@ class PengaduanController {
         const ValidatedData = rules.validate(data);
         if(ValidatedData.error) return res.json({errors:ValidatedData.error.details[0].message.replace(/"/g, '')});
 
-        const image = ImageValindasi(req,"foto") 
+        // const image = ImageValindasi(req,"foto") 
 
-        if(image.status === "danger") return res.json({errors:image.value})
+        // if(image.status === "danger") return res.json({errors:image.value})
         
-        data.url = image.value.url;
-        data.foto = image.value.fileName;
+        // data.url = image.value.url;
+        // data.foto = image.value.fileName;
 
         await Pengaduan.create(data);
 

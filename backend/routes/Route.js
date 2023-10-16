@@ -23,7 +23,7 @@ Route.delete("/masyarakat/:id/",MasyarakatController.destroy);
 Route.get("/petugas",PetugasController.index);
 Route.post("/petugas",PetugasController.store);
 Route.put("/petugas/:id/",PetugasController.update);
-Route.delete("/petugas/:id/",PetugasController.destroy);
+Route.delete("/petugas/:id/",PetugasController.destroy); 
 
 Route.get("/pengaduan",PengaduanController.index); 
 Route.post("/pengaduan",PengaduanController.store); 
