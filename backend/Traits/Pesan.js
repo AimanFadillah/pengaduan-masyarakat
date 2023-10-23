@@ -1,5 +1,5 @@
 class Pesan {
-    static pesanSuccess(msg) {
+    static pesanSuccess(msg = "success") {
         return { "msg": msg, "status": "success" };
     }
 

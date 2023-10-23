@@ -32,7 +32,6 @@ class PengaduanController {
         
         // data.url = image.value.url;
         // data.foto = image.value.fileName;
-
         await Pengaduan.create(data);
 
         return res.json({msg:"success"}); 
