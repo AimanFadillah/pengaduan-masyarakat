@@ -2,6 +2,7 @@ import Pengaduan from "../models/PengaduanModel.js";
 import Joi from "joi";
 import ImageValindasi from "../Traits/ImageValindasi.js";
 import fs from "fs";
+import Pesan from "../Traits/Pesan.js";
 
 class PengaduanController {
 
@@ -18,23 +19,21 @@ class PengaduanController {
     }
 
     static async store (req,res){  
-
         const data = req.body;
-
         const rules = Joi.object(PengaduanController.rules)
         
         const ValidatedData = rules.validate(data);
-        if(ValidatedData.error) return res.json({errors:ValidatedData.error.details[0].message.replace(/"/g, '')});
+        if(ValidatedData.error) return res.json(Pesan.pesanValidasi(ValidatedData.error));
 
-        // const image = ImageValindasi(req,"foto") 
+        const image = ImageValindasi(req,"foto") 
 
-        // if(image.status === "danger") return res.json({errors:image.value})
+        if(image.status === "danger") return res.json({errors:image.value})
         
-        // data.url = image.value.url;
-        // data.foto = image.value.fileName;
+        data.url = image.value.url;
+        data.foto = image.value.fileName;
         await Pengaduan.create(data);
 
-        return res.json({msg:"success"}); 
+        return res.json(Pesan.pesanSuccess()); 
     }
 
     static async update (req,res) {
