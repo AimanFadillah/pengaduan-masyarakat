@@ -7,7 +7,7 @@ import Pesan from "../Traits/Pesan.js";
 class PengaduanController {
 
     static rules = {
-        tgl_pengaduan : Joi.date().required(),
+        tgl_pengaduan : Joi.required(),
         nik : Joi.required(),
         isi_laporan : Joi.required(),
         status:Joi.required().valid("proses","selesai","0"), 
