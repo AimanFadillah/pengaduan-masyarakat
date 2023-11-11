@@ -5,19 +5,14 @@ import axios from "axios";
 export default function Masyarakat () {
     const [masyarakat,setMasyarakat] = useState([]);
     const [create,setCreate] = useState(true);
+    const [id,setId] = useState(0);
 
     useEffect(() => {
         getData()
     },[]);
 
     useEffect(() => {
-        if(create){
-            const formCreate = document.querySelector("#formCreate");
-            const inputs = formCreate.querySelectorAll("input");
-            for(const input of inputs) {
-                input.removeAttribute("value");
-            }
-        }
+        if(create) hapusValue()
     },[create])
 
     async function getData () { 
@@ -34,24 +29,41 @@ export default function Masyarakat () {
         e.preventDefault();
         const data = new FormData(e.target);
         const result = await axios.post("http://localhost:5000/masyarakat",data);
-        if(result.data.msg !== "success") return alert(result.data.msg);
-        closeModal()
-        getData()
+        dicheck(result,e.target);
     }
 
     async function editData (data) {
         setCreate(false);
+        setId(data.nik);
         const formCreate = document.querySelector("#formCreate");
         const inputs = formCreate.querySelectorAll("input");
-        for(const input of inputs) {
-            if(input.getAttribute("type") !== "password") {
-                input.setAttribute("value",data[input.name]);
-            };
-        }
+        for(const input of inputs) input.setAttribute("value",data[input.name]);
+    }
+
+    async function updateData (e) {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        data.delete("nik");
+        data.delete("password");
+        const result = await axios.put("http://localhost:5000/masyarakat/" + id,data);
+        dicheck(result,e.target);
     }
 
     async function deleteData (id) {
         const result = await axios.delete(`http://localhost:5000/masyarakat/${id}`)
+        getData()
+    }
+
+    function hapusValue () {
+        const formCreate = document.querySelector("#formCreate");
+        const inputs = formCreate.querySelectorAll("input");
+        for(const input of inputs) input.removeAttribute("value");
+    }
+
+    function dicheck (result,form) {
+        if(result.data.msg !== "success") return alert(result.data.msg);
+        form.reset()
+        closeModal()
         getData()
     }
 
@@ -106,7 +118,7 @@ export default function Masyarakat () {
                         <form id="formCreate" onSubmit={create ? createData : updateData}>
                             <div className={`mb-3 ${create ? "" : "d-none"}`}>
                                 <label htmlFor="nik" className="form-label text-dark">Nik</label>
-                                <input type="text" required name="nik" className="form-control" id="nik" placeholder="Masukkan nik"/>
+                                <input type="text" name="nik" required={create ? true : false} className="form-control" id="nik" placeholder="Masukkan nik"/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="nama" className="form-label text-dark">Nama</label>
@@ -118,7 +130,7 @@ export default function Masyarakat () {
                             </div>
                             <div className={`mb-3 ${create ? "" : "d-none"}`}>
                                 <label htmlFor="Password" className="form-label text-dark">Password</label>
-                                <input type="password" required name="password" className="form-control" id="Password" placeholder="Masukkan Password"/>
+                                <input type="password" name="password" required={create ? true : false} className="form-control" id="Password" placeholder="Masukkan Password"/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="telp" className="form-label text-dark">Telepon</label>
