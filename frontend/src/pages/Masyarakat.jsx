@@ -75,7 +75,8 @@ export default function Masyarakat () {
             </div>
         </div>
         <div className="table-responsive">
-            <table className="table">
+            <table className="table mt-3
+            " >
             <thead>
                 <tr>
                     <th>No</th>

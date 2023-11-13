@@ -38,16 +38,13 @@ class PengaduanController {
 
     static async update (req,res) {
         const pengaduan = await Pengaduan.findOne({ where: { id_pengaduan:req.params.id } });
-
         const data = req.body;
-
         const rules = Joi.object(PengaduanController.rules); 
 
         const ValidatedData = rules.validate(data); 
         if(ValidatedData.error) return res.json({errors:ValidatedData.error.details[0].message.replace(/"/g, '')});
 
         let image;
-
         if(req.files){
             image = ImageValindasi(req,"foto");
             if(image.status === "danger") return res.json({errors:image.value})
@@ -57,7 +54,6 @@ class PengaduanController {
         }
 
         await Pengaduan.update(data,{where : { id_pengaduan:pengaduan.id_pengaduan }})
-
         return res.json({msg:"success"});
     }
 
