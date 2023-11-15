@@ -14,6 +14,6 @@ const Masyarakat = db.define("masyarakat",{
     telp:DataTypes.STRING,
 },{freezeTableName:true})
 
-await Masyarakat.sync();
+// await Masyarakat.sync();
 
 export default Masyarakat;

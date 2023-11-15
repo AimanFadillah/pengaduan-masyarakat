@@ -32,7 +32,7 @@ Petugas.hasMany(Tanggapan,{
     foreignKey:"id_petugas"
 })
 
-await Tanggapan.sync();
+// await Tanggapan.sync();
 
 
 

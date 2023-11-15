@@ -17,6 +17,6 @@ const Pengaduan = db.define("pengaduan", {
     status: DataTypes.STRING,
 })
 
-await Pengaduan.sync();
+// await Pengaduan.sync();
 
 export default Pengaduan;

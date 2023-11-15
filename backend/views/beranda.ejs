@@ -4,17 +4,78 @@
     <%- include("layouts/header")  %>
 </head>
 <body class="bg-secondary">
-    
+    <%- include("layouts/navbar") %>
+
     <div class="container" style="margin-top: 100px;" >
         <div class="row justify-content-center">
-            <div class="col-md-5">
-                <h1>Success</h1>
-                <a href="/logout">Logout</a>
+            <div class="col-md-6">
+                <div class="bg-light p-3 rounded shadow">
+                    <table id="tableData" >
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Aiman</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     
 
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script>    
+    <script>
+    const dataTablesnya =  $('#tableData').DataTable( {
+        dom: 'Blfrtip',
+        buttons: [
+            'csv', 'excel', 'print'
+        ],
+        // columns:[
+        //     {data:"nomor",name:"nomor"},
+        //     {data:"AccountNumber",name:"AccountNumber"},
+        //     {data:"AccountHolder",name:"AccountHolder"},
+        //     {data:"AccountBalance",name:"AccountBalance"},
+        //     {data:"AccountType",name:"AccountType"},
+        //     {data:"tanggalFormat",name:"tanggalFormat"},
+        //     {
+        //         data: "id",
+        //         name: "id",
+        //         render: function (data, type, full, meta) {
+        //             let Actions = 
+        //             `
+        //             <button class="w-10 h-10 rounded-full bg-green-400 fi justify-center">
+        //                 <img src="/img/icons8-eye-24.png" alt="">
+        //             </button>
+        //             <a href="/AccountManagementEdit/{{ $accounts->id }}" class="w-10 h-10 rounded-full bg-orange-400 fi justify-center">
+        //                 <img src="/img/icons8-edit-24.png" alt="">
+        //             </a>
+        //             <button data-id="${data}" class="deleteButton w-10 h-10 rounded-full bg-red-500 fi justify-center">
+        //                 <img src="/img/icons8-trash-24.png" data-id="${data}" class="deleteButton">
+        //             </button>
+        //             `
+        //             return Actions;
+        //         }
+        //     }
+        // ],
+        // createdRow: function(row, data, dataIndex) {
+        //     $(row).find('td').addClass('td');
+        //     $(row).find('td:eq(6)').addClass('td');
+        //     $(row).find('td:eq(6)').addClass('flex');
+        //     $(row).find('td:eq(6)').addClass('gap-2');
+        //     $(row).addClass("bg-slate-100")
+        // },
+    });
+    </script>
 </body>
 
 </html>

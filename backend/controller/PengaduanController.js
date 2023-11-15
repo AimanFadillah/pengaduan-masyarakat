@@ -2,11 +2,12 @@ import Pengaduan from "../models/PengaduanModel.js";
 import Joi from "joi";
 import ImageValindasi from "../Traits/ImageValindasi.js";
 import fs from "fs";
+import Pesan from "../Traits/Pesan.js";
 
 class PengaduanController {
 
     static rules = {
-        tgl_pengaduan : Joi.date().required(),
+        tgl_pengaduan : Joi.required(),
         nik : Joi.required(),
         isi_laporan : Joi.required(),
         status:Joi.required().valid("proses","selesai","0"), 
@@ -18,13 +19,11 @@ class PengaduanController {
     }
 
     static async store (req,res){  
-
         const data = req.body;
-
         const rules = Joi.object(PengaduanController.rules)
         
         const ValidatedData = rules.validate(data);
-        if(ValidatedData.error) return res.json({errors:ValidatedData.error.details[0].message.replace(/"/g, '')});
+        if(ValidatedData.error) return res.json(Pesan.pesanValidasi(ValidatedData.error));
 
         const image = ImageValindasi(req,"foto") 
 
@@ -32,24 +31,20 @@ class PengaduanController {
         
         data.url = image.value.url;
         data.foto = image.value.fileName;
-
         await Pengaduan.create(data);
 
-        return res.json({msg:"success"}); 
+        return res.json(Pesan.pesanSuccess()); 
     }
 
     static async update (req,res) {
         const pengaduan = await Pengaduan.findOne({ where: { id_pengaduan:req.params.id } });
-
         const data = req.body;
-
         const rules = Joi.object(PengaduanController.rules); 
 
         const ValidatedData = rules.validate(data); 
         if(ValidatedData.error) return res.json({errors:ValidatedData.error.details[0].message.replace(/"/g, '')});
 
         let image;
-
         if(req.files){
             image = ImageValindasi(req,"foto");
             if(image.status === "danger") return res.json({errors:image.value})
@@ -59,7 +54,6 @@ class PengaduanController {
         }
 
         await Pengaduan.update(data,{where : { id_pengaduan:pengaduan.id_pengaduan }})
-
         return res.json({msg:"success"});
     }
 

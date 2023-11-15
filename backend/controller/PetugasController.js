@@ -1,34 +1,68 @@
 import Petugas from "../models/PetugasModel.js";
 import Joi from "joi";
 import bcrypt from "bcrypt";
+import Pesan from "../Traits/Pesan.js";
 
 class PetugasController {
 
     static async index (req,res) {
-        return res.render("registrasi");
+        const data = await Petugas.findAll();
+        return res.json(data);
+    }
+
+    static async register (req,res){
+        return res.render("registrasi")
     }
 
     static async store (req,res) {
-
         const data = req.body;
 
         const rules = Joi.object({
             nama_petugas:Joi.required(),
             username:Joi.required(),
             password:Joi.required(),
+            confPassword:Joi.required(),
             telp:Joi.number().required(),
-            level:Joi.valid("admin","petugas","masyarakat").required(),
         })
 
         const validatedData = rules.validate(data);
-        if(validatedData.error) return res.json({msg:validatedData.error.details[0].message.replace(/"/g, '')});
+        if(validatedData.error) return res.json(Pesan.pesanValidasi(validatedData.error));
 
-        bcrypt.hash(data.password,10,async (error,hasil) => {
-            data.password = hasil
+        if(data.password !== data.confPassword) return res.json(Pesan.pesanError("Konfirmasi Password Salah"))
+
+        data.level = "masyarakat";
+
+        try{
+            data.password = bcrypt.hashSync(data.password,10)
             await Petugas.create(data);
-        });
+        }catch(e){
+            return res.json(Pesan.pesanError("Nama sudah digunakan"))
+        }
+        
+        return res.json(Pesan.pesanSuccess());
+    }
 
-        return res.json({msg:"success"});
+    static async update (req,res) {
+        const data = req.body;
+
+        const rules = Joi.object({
+            nama_petugas:Joi.required(),
+            username:Joi.required(),
+            telp:Joi.number().required(),
+        })
+
+        const validatedData = rules.validate(data);
+        if(validatedData.error) return res.json(Pesan.pesanValidasi(validatedData.error));
+
+        if(data.password !== data.confPassword) return res.json(Pesan.pesanError("Konfirmasi Password Salah"))
+
+        try{
+            await Petugas.update(data,{where:{ id_petugas:req.params.id}})
+        }catch(e){
+            return res.json(Pesan.pesanError("Nama sudah digunakan"))
+        }
+        
+        return res.json(Pesan.pesanSuccess());
     }
 
     static async destroy (req,res) {
