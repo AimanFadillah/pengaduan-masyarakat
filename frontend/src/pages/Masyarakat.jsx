@@ -20,11 +20,6 @@ export default function Masyarakat () {
         setMasyarakat(result.data);
     }
 
-    async function closeModal () {
-        const button = document.querySelector("#closeModal");
-        button.click();
-    }
-
     async function createData(e){   
         e.preventDefault();
         const data = new FormData(e.target);
@@ -58,6 +53,11 @@ export default function Masyarakat () {
         const formCreate = document.querySelector("#formCreate");
         const inputs = formCreate.querySelectorAll("input");
         for(const input of inputs) input.removeAttribute("value");
+    }
+
+    function closeModal () {
+        const button = document.querySelector("#closeModal");
+        button.click();
     }
 
     function dicheck (result,form) {

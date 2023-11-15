@@ -48,7 +48,6 @@ class PetugasController {
         const rules = Joi.object({
             nama_petugas:Joi.required(),
             username:Joi.required(),
-            // password:Joi.required(),
             telp:Joi.number().required(),
         })
 
