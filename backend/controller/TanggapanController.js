@@ -1,10 +1,14 @@
+import Pengaduan from "../models/PengaduanModel.js";
+import Petugas from "../models/PetugasModel.js";
 import Tanggapan from "../models/TanggapanModel.js";
 import Joi from "joi";
 
 class TanggapanController {
 
     static async index (req,res) {
-        const data = await Tanggapan.findAll();
+        const data = await Tanggapan.findAll({
+            include:[Pengaduan,Petugas]
+        });
         return res.json(data);
     }
 
@@ -38,7 +42,10 @@ class TanggapanController {
         if(!tanggapan) return res.json("Tanggapan tidak ada");
 
         const rules = Joi.object({
+            tgl_tanggapan:Joi.date().required(),
             tanggapan:Joi.required(),
+            id_pengaduan:Joi.required(),
+            id_petugas:Joi.required(),
         })
 
         const validatedData = rules.validate(data);
