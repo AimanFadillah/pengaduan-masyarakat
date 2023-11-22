@@ -7,12 +7,9 @@ import AuthController from "../controller/AuthController.js";
 
 const Route = express.Router()
 
-Route.get("/",AuthController.verifikasi,(req,res) => res.render("beranda"));
-Route.get("/login",AuthController.index)
-Route.get("/logout",AuthController.logout)
+Route.get("/",AuthController.verifikasi);
 Route.post("/login",AuthController.login)
-Route.get("/registrasi",PetugasController.register)
-Route.post("/registrasi",PetugasController.store)
+Route.get("/logout",AuthController.logout)
 
 Route.get("/masyarakat",MasyarakatController.index);
 Route.post("/masyarakat",MasyarakatController.store);

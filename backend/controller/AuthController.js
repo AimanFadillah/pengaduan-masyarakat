@@ -6,62 +6,53 @@ import Pesan from "../Traits/Pesan.js";
 
 class AuthController {
 
-    static index(req, res) {
-        const { login } = req.cookies;
-        if(login){
-            return res.redirect("/")
-        }
-        return res.render("login")
-    }
-
-    static verifikasi(req, res, next) {
-        const { login } = req.cookies;
-        if (login) {
-            jwt.verify(login, process.env.JWT_TOKEN, (err, decoded) => {
-                if (err) {
-                    res.clearCookie("login");
-                    return res.redirect("/login");
-                };
+     static verifikasi(req, res, next) {
+            if (req.cookies.login) {
+            jwt.verify(req.cookies.login, process.env.JWT_TOKEN, (err, decoded) => {
+                if(err) {
+                    res.clearCookie("login")
+                    return res.json("danger");
+                }
                 req.id = decoded.id;
-                next()
+                return res.json("success");
             })
-        } else {
-            res.clearCookie("login");
-            return res.redirect("/login");
-        }
+        }else res.json("danger");
     }
 
 
     static async login(req, res) {
         const data = req.body;
+
         const rules = Joi.object({
             name: Joi.required(),
             password: Joi.required(),
         });
 
         const validatedData = rules.validate(data)
-        if (validatedData.error) return res.json({ msg: validatedData.error.details[0].message.replace(/"/g, '') });
+        if (validatedData.error) return res.json(Pesan.pesanValidasi(validatedData.error));
 
         const petugas = await Petugas.findOne({ where: { nama_petugas: data.name } })
-        if (!petugas) return res.json({ msg: "Name atau Password salah",status:"danger" });
+        if (!petugas) return res.json(Pesan.pesanError("Name atau password salah"));
 
         const match = await bcrypt.compare(data.password, petugas.password);
-        if (!match) return res.json({ msg: "Name atau Password salah",status:"danger" })
+        if (!match) return res.json(Pesan.pesanError("Name atau password salah"))
 
         const id = petugas.id_petugas;
         const token = jwt.sign({ id: id }, process.env.JWT_TOKEN, {
             expiresIn: "1d",
         })
-        res.cookie("login", token, {
+        
+        res.cookie("login",token,{
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
         })
+        
         return res.json(Pesan.pesanSuccess());
     }
 
     static async logout (req,res){
         res.clearCookie("login");
-        return res.redirect("/login");
+        return res.json(Pesan.pesanSuccess);
     }
 
 }

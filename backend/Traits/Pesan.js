@@ -5,7 +5,6 @@ class Pesan {
 
     static pesanError(msg) {
         return { "msg": msg, "status": "danger" };
-
     }
 
     static pesanValidasi (error) {
@@ -14,8 +13,27 @@ class Pesan {
 
     static pesanModel (error) {
         const pesan = error;
-        console.log(pesan);
         return  { "msg": pesan, "status": "danger" };
+    }
+
+    static bodyNull (body = {}) {
+        const keys = Object.keys(body);
+        let check = false;
+
+        keys.forEach(key => {
+            if(body[key] === "") return check = `${key} tidak memiliki isi`;
+        });
+
+        return check;
+    }
+
+    static valindasiData (rules,body){
+        let pesan = false;
+        const validatedData = Joi.object(rules).validate(body);
+        if(!body) return pesan = "Tidak ada data";
+        if(validatedData.error) return pesan = Valindasi.pesanValidasi(validatedData);
+        if(Valindasi.bodyNull(body)) return pesan = Valindasi.bodyRequired(body);
+        return pesan;
     }
 }
 

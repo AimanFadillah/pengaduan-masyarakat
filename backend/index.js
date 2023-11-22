@@ -10,7 +10,7 @@ const port = 5000;
 
 dotenv.config();
 
-app.use(cors());
+app.use(cors({credentials:true,origin:"http://localhost:5173"}));
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(fileUpload());

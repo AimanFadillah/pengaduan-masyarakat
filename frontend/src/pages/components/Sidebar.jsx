@@ -1,6 +1,13 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Sidebar(props) {
+
+    async function logout () {
+        const response = await axios.get("http://localhost:5000/logout",{withCredentials:true})
+        window.location.href = "/";
+    }
+
     return (
         <>
             <header
@@ -120,7 +127,7 @@ export default function Sidebar(props) {
                                     <li className="nav-item">
                                         <Link
                                             className="nav-link d-flex gap-2"
-                                            href="/logout"
+                                            onClick={logout}
                                         >
                                             <i className="bi bi-box-arrow-left fs-6"></i>
                                             Logout

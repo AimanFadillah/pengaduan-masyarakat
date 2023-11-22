@@ -204,22 +204,24 @@ export default function Pengaduan () {
                         </div>
                         <div className="my-3">
                             <table>
-                                <tr>
-                                    <td className="text-dark fw-bold" >Isi Laporan</td>
-                                    <td className="text-dark" >: {show.isi_laporan}</td>
-                                </tr>
-                                <tr>
-                                    <td className="text-dark fw-bold" >Nik</td>
-                                    <td className="text-dark" >: {show.nik}</td>
-                                </tr>
-                                <tr>
-                                    <td className="text-dark fw-bold" >status</td>
-                                    <td className="text-dark" >: {show.status}</td>
-                                </tr>
-                                <tr>
-                                    <td className="text-dark fw-bold" >Tanggal Pengaduan</td>
-                                    <td className="text-dark" >: {show.tgl_pengaduan}</td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td className="text-dark fw-bold" >Isi Laporan</td>
+                                        <td className="text-dark" >: {show.isi_laporan}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-dark fw-bold" >Nik</td>
+                                        <td className="text-dark" >: {show.nik}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-dark fw-bold" >status</td>
+                                        <td className="text-dark" >: {show.status}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-dark fw-bold" >Tanggal Pengaduan</td>
+                                        <td className="text-dark" >: {show.tgl_pengaduan}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
