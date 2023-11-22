@@ -38,7 +38,6 @@ class TanggapanController {
     static async update (req,res){
         const tanggapan = await Tanggapan.findOne({where:{ id_tanggapan:req.params.id }});
         const data = req.body;
-
         if(!tanggapan) return res.json("Tanggapan tidak ada");
 
         const rules = Joi.object({
