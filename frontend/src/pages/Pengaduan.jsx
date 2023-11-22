@@ -5,6 +5,7 @@ import axios from "axios";
 export default function Pengaduan () {
     const [pengaduan,setPengaduan] = useState([]);
     const [create,setCreate] = useState(true);
+    const [show,setShow] = useState({});
     const [preview,setPreview] = useState();
     const [id,setId] = useState(0);
 
@@ -138,6 +139,7 @@ export default function Pengaduan () {
                         <td>{dt.nik}</td>
                         <td>{dt.status}</td>
                         <td>
+                            <div className="badge bg-success me-1" onClick={() => setShow(dt)} data-bs-toggle="modal" data-bs-target="#show" >Show</div>
                             <div className="badge bg-primary me-1" onClick={() => editData(dt)} data-bs-toggle="modal" data-bs-target="#modal" >Edit</div>
                             <div className="badge bg-danger" onClick={() => confirm("yakin?") ? deleteData(dt.id_pengaduan) : "" } >Hapus</div>
                         </td>
@@ -187,6 +189,39 @@ export default function Pengaduan () {
                             </div>
                             <button className={`btn ${ create ? "btn-success" : "btn-primary"} `} style={{ width:"100%" }}  >{ create ? "Buat Pengaduan" : "Edit Pengaduan" }</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div className="modal fade" id="show" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-body">
+                        <h1 className="text-dark fs-4 text-center m-0" >Show Detail</h1>
+                        <div className="my-3">
+                            <img src={show.url} alt="preview" className="img-thumbnail" accept="image/*" />
+                        </div>
+                        <div className="my-3">
+                            <table>
+                                <tr>
+                                    <td className="text-dark fw-bold" >Isi Laporan</td>
+                                    <td className="text-dark" >: {show.isi_laporan}</td>
+                                </tr>
+                                <tr>
+                                    <td className="text-dark fw-bold" >Nik</td>
+                                    <td className="text-dark" >: {show.nik}</td>
+                                </tr>
+                                <tr>
+                                    <td className="text-dark fw-bold" >status</td>
+                                    <td className="text-dark" >: {show.status}</td>
+                                </tr>
+                                <tr>
+                                    <td className="text-dark fw-bold" >Tanggal Pengaduan</td>
+                                    <td className="text-dark" >: {show.tgl_pengaduan}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

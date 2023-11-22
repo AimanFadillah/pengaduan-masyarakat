@@ -77,7 +77,7 @@ export default function Sidebar(props) {
                                     </li>
                                     <li className="nav-item">
                                         <Link
-                                            className="nav-link d-flex  gap-2"
+                                            className={`nav-link d-flex gap-2 ${ window.location.href.includes("masyarakat") ? "text-light" : undefined }`}
                                             to="/masyarakat"
                                         >
                                             <i className="bi bi-person-fill"></i>
@@ -86,7 +86,7 @@ export default function Sidebar(props) {
                                     </li>
                                     <li className="nav-item">
                                         <Link
-                                            className="nav-link d-flex  gap-2"
+                                            className={`nav-link d-flex gap-2 ${ window.location.href.includes("pengaduan") ? "text-light" : undefined }`}
                                             href="#"
                                             to="/pengaduan"
                                         >
@@ -96,7 +96,7 @@ export default function Sidebar(props) {
                                     </li>
                                     <li className="nav-item">
                                         <Link
-                                            className={`nav-link d-flex gap-2`}
+                                            className={`nav-link d-flex gap-2 ${ window.location.href.includes("petugas") ? "text-light" : undefined }`}
                                             to="/petugas"
                                         >
                                             <i className="bi bi-people-fill"></i>
@@ -105,7 +105,7 @@ export default function Sidebar(props) {
                                     </li>
                                     <li className="nav-item">
                                         <Link
-                                            className="nav-link d-flex gap-2"
+                                            className={`nav-link d-flex gap-2 ${ window.location.href.includes("tanggapan") ? "text-light" : undefined }`}
                                             to="/tanggapan"
                                         >
                                             <i className    ="bi bi-chat-right-text-fill"></i>
