@@ -4,22 +4,24 @@ import axios from "axios";
 
 export default function Pengaduan () {
     const [pengaduan,setPengaduan] = useState([]);
+    const [masyarakat,setMasyarakat] = useState([]);
     const [create,setCreate] = useState(true);
     const [show,setShow] = useState({});
     const [preview,setPreview] = useState();
     const [id,setId] = useState(0);
 
     useEffect(() => {
-        getData()
+        getData(setPengaduan,"http://localhost:5000/pengaduan")
+        getData(setMasyarakat,"http://localhost:5000/masyarakat")
     },[]);
 
     useEffect(() => {
         if(create) hapusValue()
     },[create])
     
-    async function getData () { 
-        const result = await axios.get("http://localhost:5000/pengaduan")
-        setPengaduan(result.data);
+    async function getData (set,url) { 
+        const result = await axios.get(url)
+        set(result.data);
     }
 
     async function createData(e){   
@@ -37,7 +39,7 @@ export default function Pengaduan () {
         const inputs = formCreate.querySelectorAll("input");
         const options = formCreate.querySelectorAll("option");
         for(const input of inputs) input.type === "date" ? input.setAttribute("value",(data[input.name].split("T"))[0]) : input.setAttribute("value",data[input.name])
-        for(const option of options) option.value === data.status ? option.selected : undefined
+        for(const option of options) option.value === data.status || option.value === data.nik ? option.setAttribute("selected","true") : undefined
     }
 
     async function updateData (e) {
@@ -49,7 +51,7 @@ export default function Pengaduan () {
 
     async function deleteData (id) {
         const result = await axios.delete(`http://localhost:5000/pengaduan/${id}`)
-        getData()
+        getData(setPengaduan,"http://localhost:5000/pengaduan")
     }
 
     function previewImage (e) {
@@ -109,7 +111,7 @@ export default function Pengaduan () {
         if(result.data.msg !== "success") return alert(result.data.msg);
         form.reset()
         closeModal()
-        getData()
+        getData(setPengaduan,"http://localhost:5000/pengaduan")
     }
 
     return <Sidebar>
@@ -167,9 +169,18 @@ export default function Pengaduan () {
                                 <label htmlFor="foto" className="form-label text-dark">Foto</label>
                                 <input type="file" onChange={previewImage} required={create ? true : false} name="foto" className="form-control" id="foto" placeholder="Masukkan Foto"/>
                             </div>
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label htmlFor="nik" className="form-label text-dark">Nik</label>
                                 <input type="number" required name="nik" className="form-control" id="nik" placeholder="Masukkan Nik"/>
+                            </div> */}
+                            <div className="mb-3">
+                                <label htmlFor="nik" className="form-label text-dark">Nik</label>
+                                <select name="nik" id="nik" className="form-select" >
+                                    <option value="" className="text-dark" >Pilih Nik</option>
+                                    {masyarakat.map((dt,index) => 
+                                        <option key={index} value={dt.nik} className="text-dark">{dt.nik}</option>
+                                    )}
+                                </select>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="tgl_pengaduan" className="form-label text-dark">Tanggal Pengaduan</label>

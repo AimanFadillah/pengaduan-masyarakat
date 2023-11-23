@@ -82,8 +82,8 @@ export default function Petugas () {
                     <th>No</th>
                     <th>Nama</th>
                     <th>Usernama</th>
-                    <th>Telp</th>
                     <th>Level</th>
+                    <th>Telp</th>
                     <th>Action</th>
                 </tr>
             </thead>

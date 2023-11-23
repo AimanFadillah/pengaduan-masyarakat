@@ -30,7 +30,7 @@ class PetugasController {
 
         if(data.password !== data.confPassword) return res.json(Pesan.pesanError("Konfirmasi Password Salah"))
 
-        data.level = "masyarakat";
+        data.level = "petugas";
 
         try{
             data.password = bcrypt.hashSync(data.password,10)

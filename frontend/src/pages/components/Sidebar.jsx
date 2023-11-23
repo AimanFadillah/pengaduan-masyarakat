@@ -1,7 +1,11 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Sidebar(props) {
+    const [user,setUser] = useState({});
+
+    useEffect(() => setUser(JSON.parse(localStorage.getItem("user"))),[]);
 
     async function logout () {
         const response = await axios.get("http://localhost:5000/logout",{withCredentials:true})
@@ -73,16 +77,16 @@ export default function Sidebar(props) {
                             
                             <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                                 <ul className="nav flex-column">
-                                    <li className="nav-item">
+                                    <li className={`nav-item ${user.level === "admin" ? "" : "d-none" }`}> 
                                         <Link
-                                            className={`nav-link d-flex gap-2 ` }
+                                            className={`nav-link d-flex gap-2 ${ window.location.href.includes("beranda") ? "text-light" : undefined }` }
                                             aria-current="page"
                                             to="/beranda"
                                         >
                                             <i className="bi bi-bar-chart-fill"></i>Dashboard
                                         </Link>
                                     </li>
-                                    <li className="nav-item">
+                                    <li className={`nav-item ${user.level === "admin" ? "" : "d-none" }`}>
                                         <Link
                                             className={`nav-link d-flex gap-2 ${ window.location.href.includes("masyarakat") ? "text-light" : undefined }`}
                                             to="/masyarakat"
@@ -91,7 +95,7 @@ export default function Sidebar(props) {
                                             Masyarakat
                                         </Link>
                                     </li>
-                                    <li className="nav-item">
+                                    <li className={`nav-item ${user.level === "admin" || user.level === "masyarakat" ? "" : "d-none" }`}>
                                         <Link
                                             className={`nav-link d-flex gap-2 ${ window.location.href.includes("pengaduan") ? "text-light" : undefined }`}
                                             href="#"
@@ -101,7 +105,7 @@ export default function Sidebar(props) {
                                             Pengaduan
                                         </Link>
                                     </li>
-                                    <li className="nav-item">
+                                    <li className={`nav-item ${user.level === "admin" ? "" : "d-none" }`}>
                                         <Link
                                             className={`nav-link d-flex gap-2 ${ window.location.href.includes("petugas") ? "text-light" : undefined }`}
                                             to="/petugas"
@@ -110,7 +114,7 @@ export default function Sidebar(props) {
                                             Petugas
                                         </Link>
                                     </li>
-                                    <li className="nav-item">
+                                    <li className={`nav-item ${user.level === "petugas" ? "" : "d-none" }`}>
                                         <Link
                                             className={`nav-link d-flex gap-2 ${ window.location.href.includes("tanggapan") ? "text-light" : undefined }`}
                                             to="/tanggapan"
