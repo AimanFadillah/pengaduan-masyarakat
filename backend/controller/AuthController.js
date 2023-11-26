@@ -11,17 +11,42 @@ class AuthController {
         return res.json(req.user);
     }
 
-    static verifikasi(req, res) {
+    static check (req,res,next) {
+        const status = AuthController.verifikasi2(req,res,true);
+        if(status !== "success") return res.sendStatus(404);
+        return next();
+    }
+
+    static verifikasi(req,res) {
         if (req.cookies.login) {
             jwt.verify(req.cookies.login, process.env.JWT_TOKEN, (err, decoded) => {
                 if(err) {
                     res.clearCookie("login")
-                    return res.json("danger");
+                    return res.json("danger")
                 }
                 req.user = decoded.user;
-                return res.json("success");
+                return res.json("success")
             })
-        }else res.json("danger");
+        }else {
+            return res.json("danger");
+        }
+    }
+
+    static verifikasi2(req,res) {
+        let status = "danger";
+        if (req.cookies.login) {
+            jwt.verify(req.cookies.login, process.env.JWT_TOKEN, (err, decoded) => {
+                if(err) {
+                    res.clearCookie("login")
+                    return status = "danger"
+                }
+                req.user = decoded.user;
+                return status = "success"
+            })
+            return status;
+        }else {
+            return status;
+        }
     }
 
 

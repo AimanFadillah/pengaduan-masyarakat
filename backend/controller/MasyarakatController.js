@@ -5,9 +5,6 @@ import bcrypt from "bcrypt";
 class MasyarakatController {
     static async index(req, res) {
         const data = await Masyarakat.findAll();
-        // return res.render("masyarakat",{
-        //     data:data,
-        // });
         return res.json(data);
     }
 

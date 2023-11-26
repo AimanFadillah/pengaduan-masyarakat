@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function Pengaduan () {
     const [pengaduan,setPengaduan] = useState([]);
-    const [masyarakat,setMasyarakat] = useState([]);
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")));
     const [create,setCreate] = useState(true);
     const [show,setShow] = useState({});
     const [preview,setPreview] = useState();
@@ -12,7 +12,6 @@ export default function Pengaduan () {
 
     useEffect(() => {
         getData(setPengaduan,"http://localhost:5000/pengaduan")
-        getData(setMasyarakat,"http://localhost:5000/masyarakat")
     },[]);
 
     useEffect(() => {
@@ -20,13 +19,15 @@ export default function Pengaduan () {
     },[create])
     
     async function getData (set,url) { 
-        const result = await axios.get(url)
+        const result = await axios.get(url,{withCredentials:true})
         set(result.data);
     }
 
     async function createData(e){   
         e.preventDefault();
         const data = new FormData(e.target);
+        data.append("nik",user.nik);
+        data.append("status","0");
         const result = await axios.post("http://localhost:5000/pengaduan",data);
         dicheck(result,e.target);
     }
@@ -111,6 +112,7 @@ export default function Pengaduan () {
         if(result.data.msg !== "success") return alert(result.data.msg);
         form.reset()
         closeModal()
+        setPreview()
         getData(setPengaduan,"http://localhost:5000/pengaduan")
     }
 
@@ -118,7 +120,7 @@ export default function Pengaduan () {
         <div className="d-flex justify-content-between align-items-center">
             <h1 className=" text-dark" >Pengaduan</h1>
             <div className="">
-                <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal"  onClick={() => setCreate(true)} ><i className="bi bi-plus-lg"></i> Buat Pengaduan</button>
+                <button className={`btn btn-success ${user.level === "admin" ? "d-none" : ""}`} data-bs-toggle="modal" data-bs-target="#modal"  onClick={() => setCreate(true)} ><i className="bi bi-plus-lg"></i> Buat Pengaduan</button>
             </div>
         </div>
         <div className="table-responsive">
@@ -139,7 +141,7 @@ export default function Pengaduan () {
                         <td>{index + 1}</td>
                         <td>{dt.isi_laporan}</td>
                         <td>{dt.nik}</td>
-                        <td>{dt.status}</td>
+                        <td>{dt.status === "0" ? "kosong" : dt.status}</td>
                         <td>
                             <div className="badge bg-success me-1" onClick={() => setShow(dt)} data-bs-toggle="modal" data-bs-target="#show" >Show</div>
                             <div className="badge bg-primary me-1" onClick={() => editData(dt)} data-bs-toggle="modal" data-bs-target="#modal" >Edit</div>
@@ -162,34 +164,22 @@ export default function Pengaduan () {
                     <div className="modal-body">
                         <h1 className="text-dark fs-4 text-center m-0" > { create ? "Buat Pengaduan" : "Edit Pengaduan" }</h1>
                         <form id="formCreate" onSubmit={create ? createData : updateData}>
-                            <div className="my-3">
+                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
                                 {preview ? <img src={preview} alt="preview"  className="img-thumbnail" accept="image/*" /> : ""}
                             </div>
-                            <div className="mb-3">
+                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
                                 <label htmlFor="foto" className="form-label text-dark">Foto</label>
                                 <input type="file" onChange={previewImage} required={create ? true : false} name="foto" className="form-control" id="foto" placeholder="Masukkan Foto"/>
                             </div>
-                            {/* <div className="mb-3">
-                                <label htmlFor="nik" className="form-label text-dark">Nik</label>
-                                <input type="number" required name="nik" className="form-control" id="nik" placeholder="Masukkan Nik"/>
-                            </div> */}
-                            <div className="mb-3">
-                                <label htmlFor="nik" className="form-label text-dark">Nik</label>
-                                <select name="nik" id="nik" className="form-select" >
-                                    <option value="" className="text-dark" >Pilih Nik</option>
-                                    {masyarakat.map((dt,index) => 
-                                        <option key={index} value={dt.nik} className="text-dark">{dt.nik}</option>
-                                    )}
-                                </select>
-                            </div>
-                            <div className="mb-3">
+                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
                                 <label htmlFor="tgl_pengaduan" className="form-label text-dark">Tanggal Pengaduan</label>
                                 <input type="date" required name="tgl_pengaduan" className="form-control" id="tgl_pengaduan" placeholder="Masukkan Tanggal Pengaduan"/>
                             </div>
-                            <div className="mb-3">
+                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
                                 <label htmlFor="isi_laporan" className="form-label text-dark">Isi laporan</label>
                                 <input type="text" required name="isi_laporan" className="form-control" id="isi_laporan" placeholder="Masukkan Isi laporan"/>
                             </div>
+                            {user.level === "admin" ? 
                             <div className="mb-3">
                                 <label htmlFor="status" className="form-label text-dark">Status</label>
                                 <select name="status" id="status" className="form-select" >
@@ -198,6 +188,7 @@ export default function Pengaduan () {
                                     <option value="selesai" className="text-dark">Selesai</option>
                                 </select>
                             </div>
+                            : ""}
                             <button className={`btn ${ create ? "btn-success" : "btn-primary"} `} style={{ width:"100%" }}  >{ create ? "Buat Pengaduan" : "Edit Pengaduan" }</button>
                         </form>
                     </div>

@@ -4,15 +4,14 @@ import axios from "axios";
 
 export default function Tanggapan () {
     const [tanggapan,setTanggapan] = useState([]);
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")));
     const [pengaduan,setPengaduan] = useState([]);
-    const [petugas,setPetugas] = useState([]);
     const [create,setCreate] = useState(true);
     const [id,setId] = useState(0);
 
     useEffect(() => {
         getData(setTanggapan,"http://localhost:5000/tanggapan")
         getData(setPengaduan,"http://localhost:5000/pengaduan")
-        getData(setPetugas,"http://localhost:5000/petugas")
     },[]);
 
     useEffect(() => {
@@ -20,13 +19,14 @@ export default function Tanggapan () {
     },[create])
 
     async function getData (set,link) { 
-        const result = await axios.get(link)
+        const result = await axios.get(link,{withCredentials:true})
         set(result.data);
     }
 
     async function createData(e){   
         e.preventDefault();
         const data = new FormData(e.target);
+        data.append("id_petugas",user.id_petugas )
         const result = await axios.post("http://localhost:5000/tanggapan",data);
         dicheck(result,e.target);
     }
@@ -129,7 +129,7 @@ export default function Tanggapan () {
                                     )}
                                 </select>
                             </div>
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label htmlFor="petugas" className="form-label text-dark">Petugas</label>
                                 <select name="id_petugas" id="petugas" className="form-select" required>
                                     <option value="" className="text-dark" >Pilih petugas</option>
@@ -137,7 +137,7 @@ export default function Tanggapan () {
                                         <option key={index} value={dt.id_petugas} className="text-dark" >{dt.nama_petugas}</option>
                                     )}
                                 </select>
-                            </div>
+                            </div> */}
                             <div className="mb-3">
                                 <label htmlFor="Tanggapan" className="form-label text-dark">Tanggapan</label>
                                 <input type="text" name="tanggapan" className="form-control" id="Tanggapan" placeholder="Masukkan Tanggapan"/>

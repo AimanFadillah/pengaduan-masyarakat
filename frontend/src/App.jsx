@@ -21,10 +21,11 @@ function App() {
 
   async function middleware () {
     const response = await axios.get("http://localhost:5000",{withCredentials:true});
-    if(response.data !== "success") {
+    if(response.data !== "success" || !localStorage.getItem("user")) {
+      if(localStorage.getItem("user")) localStorage.removeItem("user");
       setCheck("danger");
       setUrl("/login");
-    }
+    } 
   }
   
   return (

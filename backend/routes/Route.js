@@ -22,7 +22,7 @@ Route.post("/petugas",PetugasController.store);
 Route.put("/petugas/:id/",PetugasController.update);
 Route.delete("/petugas/:id/",PetugasController.destroy); 
 
-Route.get("/pengaduan",PengaduanController.index); 
+Route.get("/pengaduan",AuthController.check,PengaduanController.index); 
 Route.post("/pengaduan",PengaduanController.store); 
 Route.put("/pengaduan/:id/",PengaduanController.update);
 Route.delete("/pengaduan/:id/",PengaduanController.destroy);
@@ -31,7 +31,7 @@ Route.get("/registrasi",PetugasController.index);
 Route.post("/petugas",PetugasController.store);
 Route.delete("/petugas/:id/",PetugasController.destroy);
 
-Route.get("/tanggapan",TanggapanController.index);
+Route.get("/tanggapan",AuthController.check,TanggapanController.index);
 Route.post("/tanggapan",TanggapanController.store);
 Route.put("/tanggapan/:id/",TanggapanController.update);
 Route.delete("/tanggapan/:id/",TanggapanController.destroy);

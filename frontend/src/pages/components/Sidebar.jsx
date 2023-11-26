@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Sidebar(props) {
-    const [user,setUser] = useState({});
-
-    useEffect(() => setUser(JSON.parse(localStorage.getItem("user"))),[]);
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")) || {level:"danger"});
 
     async function logout () {
         const response = await axios.get("http://localhost:5000/logout",{withCredentials:true})

@@ -8,20 +8,19 @@ class PengaduanController {
 
     static rules = {
         tgl_pengaduan : Joi.required(),
-        nik : Joi.required(),
+        nik : Joi.allow(),
         isi_laporan : Joi.required(),
-        status:Joi.required().valid("proses","selesai","0"), 
+        status:Joi.allow().valid("proses","selesai","0"), 
     };
 
     static async index (req,res) {
-        const data = await Pengaduan.findAll();
+        const data = req.user && req.user.nik ? await Pengaduan.findAll({where:{nik:req.user.nik}}) : req.user.level === "admin" ? await Pengaduan.findAll() : await Pengaduan.findAll({where:{status:["proses","selesai"]}});
         return res.json(data);
     }
 
     static async store (req,res){  
         const data = req.body;
         const rules = Joi.object(PengaduanController.rules)
-        
         const ValidatedData = rules.validate(data);
         if(ValidatedData.error) return res.json(Pesan.pesanValidasi(ValidatedData.error));
 

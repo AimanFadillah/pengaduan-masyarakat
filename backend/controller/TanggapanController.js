@@ -7,7 +7,10 @@ class TanggapanController {
 
     static async index (req,res) {
         const data = await Tanggapan.findAll({
-            include:[Pengaduan,Petugas]
+            where:{
+                id_petugas:req.user.id_petugas
+            },
+            include:[Pengaduan,Petugas],
         });
         return res.json(data);
     }
@@ -44,7 +47,6 @@ class TanggapanController {
             tgl_tanggapan:Joi.date().required(),
             tanggapan:Joi.required(),
             id_pengaduan:Joi.required(),
-            id_petugas:Joi.required(),
         })
 
         const validatedData = rules.validate(data);
