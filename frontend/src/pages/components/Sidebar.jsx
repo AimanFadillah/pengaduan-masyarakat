@@ -93,7 +93,7 @@ export default function Sidebar(props) {
                                             Masyarakat
                                         </Link>
                                     </li>
-                                    <li className={`nav-item ${user.level === "admin" || user.level === "masyarakat" ? "" : "d-none" }`}>
+                                    <li className={`nav-item ${user.level !== "masyarakat" || user.level === "masyarakat" ? "" : "d-none" }`}>
                                         <Link
                                             className={`nav-link d-flex gap-2 ${ window.location.href.includes("pengaduan") ? "text-light" : undefined }`}
                                             href="#"
@@ -112,7 +112,7 @@ export default function Sidebar(props) {
                                             Petugas
                                         </Link>
                                     </li>
-                                    <li className={`nav-item ${user.level === "petugas" ? "" : "d-none" }`}>
+                                    <li className={`nav-item ${user.level !== "masyarakat" ? "" : "d-none" }`}>
                                         <Link
                                             className={`nav-link d-flex gap-2 ${ window.location.href.includes("tanggapan") ? "text-light" : undefined }`}
                                             to="/tanggapan"

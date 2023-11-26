@@ -14,7 +14,7 @@ class PengaduanController {
     };
 
     static async index (req,res) {
-        const data = req.user && req.user.nik ? await Pengaduan.findAll({where:{nik:req.user.nik}}) : req.user.level === "admin" ? await Pengaduan.findAll() : await Pengaduan.findAll({where:{status:["proses","selesai"]}});
+        const data = req.user && req.user.nik ? await Pengaduan.findAll({where:{nik:req.user.nik}}) : await Pengaduan.findAll() ;
         return res.json(data);
     }
 

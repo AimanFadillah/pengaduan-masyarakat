@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function Pengaduan () {
     const [pengaduan,setPengaduan] = useState([]);
-    const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")));
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")));  
     const [create,setCreate] = useState(true);
     const [show,setShow] = useState({});
     const [preview,setPreview] = useState();
@@ -120,7 +120,7 @@ export default function Pengaduan () {
         <div className="d-flex justify-content-between align-items-center">
             <h1 className=" text-dark" >Pengaduan</h1>
             <div className="">
-                <button className={`btn btn-success ${user.level === "admin" ? "d-none" : ""}`} data-bs-toggle="modal" data-bs-target="#modal"  onClick={() => setCreate(true)} ><i className="bi bi-plus-lg"></i> Buat Pengaduan</button>
+                <button className={`btn btn-success ${user.level !== "masyarakat" ? "d-none" : ""}`} data-bs-toggle="modal" data-bs-target="#modal"  onClick={() => setCreate(true)} ><i className="bi bi-plus-lg"></i> Buat Pengaduan</button>
             </div>
         </div>
         <div className="table-responsive">
@@ -164,22 +164,22 @@ export default function Pengaduan () {
                     <div className="modal-body">
                         <h1 className="text-dark fs-4 text-center m-0" > { create ? "Buat Pengaduan" : "Edit Pengaduan" }</h1>
                         <form id="formCreate" onSubmit={create ? createData : updateData}>
-                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
                                 {preview ? <img src={preview} alt="preview"  className="img-thumbnail" accept="image/*" /> : ""}
                             </div>
-                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
                                 <label htmlFor="foto" className="form-label text-dark">Foto</label>
                                 <input type="file" onChange={previewImage} required={create ? true : false} name="foto" className="form-control" id="foto" placeholder="Masukkan Foto"/>
                             </div>
-                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
                                 <label htmlFor="tgl_pengaduan" className="form-label text-dark">Tanggal Pengaduan</label>
                                 <input type="date" required name="tgl_pengaduan" className="form-control" id="tgl_pengaduan" placeholder="Masukkan Tanggal Pengaduan"/>
                             </div>
-                            <div className={`my-3 ${user.level === "admin" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
                                 <label htmlFor="isi_laporan" className="form-label text-dark">Isi laporan</label>
                                 <input type="text" required name="isi_laporan" className="form-control" id="isi_laporan" placeholder="Masukkan Isi laporan"/>
                             </div>
-                            {user.level === "admin" ? 
+                            {user !== "masyarakat" ? 
                             <div className="mb-3">
                                 <label htmlFor="status" className="form-label text-dark">Status</label>
                                 <select name="status" id="status" className="form-select" >

@@ -14,6 +14,7 @@ function setUrl (url) {
 
 function App() {
   const [check,setCheck] = useState("success");
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")) || {level:"masyarakat"})
 
   useEffect(() => {
     middleware()
@@ -34,10 +35,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Beranda/>} />
         <Route path="/beranda" element={<Beranda/>} />
-        <Route path="/masyarakat" element={<Masyarakat/>} />
         <Route path="/pengaduan" element={<Pengaduan />} />
-        <Route path="/petugas" element={<Petugas />} />
-        <Route path="/tanggapan" element={<Tanggapan />} />
+        {user.level === "petugas" || user.level === "admin" ? 
+          <Route path="/tanggapan" element={<Tanggapan />} />
+          : undefined
+        }
+        {user.level === "admin" ? 
+        <>
+          <Route path="/masyarakat" element={<Masyarakat/>} />
+          <Route path="/petugas" element={<Petugas />} />
+        </>  
+        : undefined
+        }
       </Routes>
     </BrowserRouter>
     : <Login/>

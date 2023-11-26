@@ -6,7 +6,7 @@ import Pesan from "../Traits/Pesan.js";
 class PetugasController {
 
     static async index (req,res) {
-        const data = await Petugas.findAll();
+        const data = await Petugas.findAll({where:{level:"admin"}});
         return res.json(data);
     }
 
