@@ -20,6 +20,7 @@ export default function Pengaduan () {
     
     async function getData (set,url) { 
         const result = await axios.get(url,{withCredentials:true})
+        console.log(result);
         set(result.data);
     }
 
@@ -226,6 +227,21 @@ export default function Pengaduan () {
                                 </tbody>
                             </table>
                         </div>
+                        {show.tanggapans && show.tanggapans.length > 0 ? 
+                        <div className="">
+                            <h6 className="text-dark text-center" >Tanggapan Petugas</h6>
+                            <ul className="list-group   ">
+                                {show.tanggapans.map((dt,index) => 
+                                    <li className="list-group-item p-1">
+                                        <div className="ms-2 me-auto text-dark">
+                                            <div className="fw-bold text-dark">{dt.petuga.nama_petugas}</div>
+                                            {dt.tanggapan}
+                                        </div>
+                                    </li>
+                                )}
+                            </ul>
+                        </div>
+                        : ""}
                     </div>
                 </div>
             </div>

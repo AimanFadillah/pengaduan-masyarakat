@@ -3,6 +3,8 @@ import Joi from "joi";
 import ImageValindasi from "../Traits/ImageValindasi.js";
 import fs from "fs";
 import Pesan from "../Traits/Pesan.js";
+import Tanggapan from "../models/TanggapanModel.js"
+import Petugas from "../models/PetugasModel.js";
 
 class PengaduanController {
 
@@ -14,7 +16,12 @@ class PengaduanController {
     };
 
     static async index (req,res) {
-        const data = req.user && req.user.nik ? await Pengaduan.findAll({where:{nik:req.user.nik}}) : await Pengaduan.findAll() ;
+        const include = {
+            model:Tanggapan,
+            include:Petugas
+        }
+        
+        const data = req.user && req.user.nik ? await Pengaduan.findAll({where:{nik:req.user.nik},include}) : await Pengaduan.findAll({include}) ;
         return res.json(data);
     }
 
