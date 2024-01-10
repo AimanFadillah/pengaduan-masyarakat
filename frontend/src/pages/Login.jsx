@@ -22,6 +22,7 @@ export default function Login () {
         const response = await axios.post("http://localhost:5000/masyarakat",data)
         if(response.data.msg !== "success") return alert(response.data.msg);
         setRegister(false);
+        e.target.reset();
     }
 
     return <>

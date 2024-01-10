@@ -201,8 +201,8 @@ export default function Pengaduan () {
                 <div className="modal-content">
                     <div className="modal-body">
                         <h1 className="text-dark fs-4 text-center m-0" >Show Detail</h1>
-                        <div className="my-3">
-                            <img src={show.url} alt="preview" className="img-thumbnail" accept="image/*" />
+                        <div className="my-3 d-flex justify-content-center">
+                            <img src={show.url} alt="preview" className="img-thumbnail img-fluid" accept="image/*" />
                         </div>
                         <div className="my-3">
                             <table>

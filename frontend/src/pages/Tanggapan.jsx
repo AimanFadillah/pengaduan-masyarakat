@@ -77,7 +77,7 @@ export default function Tanggapan () {
         <div className="d-flex justify-content-between align-items-center">
             <h1 className=" text-dark" >Tanggapan</h1>
             <div className="">
-                <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal"  onClick={() => setCreate(true)} ><i className="bi bi-plus-lg"></i> Buat Petugas</button>
+                <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal"  onClick={() => setCreate(true)} ><i className="bi bi-plus-lg"></i> Buat Tanggapan</button>
             </div>
         </div>
         <div className="table-responsive">
