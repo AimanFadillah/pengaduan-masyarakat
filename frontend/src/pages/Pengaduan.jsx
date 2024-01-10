@@ -164,22 +164,22 @@ export default function Pengaduan () {
                     <div className="modal-body">
                         <h1 className="text-dark fs-4 text-center m-0" > { create ? "Buat Pengaduan" : "Edit Pengaduan" }</h1>
                         <form id="formCreate" onSubmit={create ? createData : updateData}>
-                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user.level !== "masyarakat" ? "d-none" : ""}`}>
                                 {preview ? <img src={preview} alt="preview"  className="img-thumbnail" accept="image/*" /> : ""}
                             </div>
-                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user.level !== "masyarakat" ? "d-none" : ""}`}>
                                 <label htmlFor="foto" className="form-label text-dark">Foto</label>
                                 <input type="file" onChange={previewImage} required={create ? true : false} name="foto" className="form-control" id="foto" placeholder="Masukkan Foto"/>
                             </div>
-                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user.level !== "masyarakat" ? "d-none" : ""}`}>
                                 <label htmlFor="tgl_pengaduan" className="form-label text-dark">Tanggal Pengaduan</label>
                                 <input type="date" required name="tgl_pengaduan" className="form-control" id="tgl_pengaduan" placeholder="Masukkan Tanggal Pengaduan"/>
                             </div>
-                            <div className={`my-3 ${user !== "masyarakat" ? "d-none" : ""}`}>
+                            <div className={`my-3 ${user.level !== "masyarakat" ? "d-none" : ""}`}>
                                 <label htmlFor="isi_laporan" className="form-label text-dark">Isi laporan</label>
                                 <input type="text" required name="isi_laporan" className="form-control" id="isi_laporan" placeholder="Masukkan Isi laporan"/>
                             </div>
-                            {user !== "masyarakat" ? 
+                            {user.level !== "masyarakat" ? 
                             <div className="mb-3">
                                 <label htmlFor="status" className="form-label text-dark">Status</label>
                                 <select name="status" id="status" className="form-select" >
